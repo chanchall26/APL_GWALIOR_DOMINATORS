@@ -1,0 +1,540 @@
+{
+  "meta": {
+    "season": "IPL 2026",
+    "startDate": "2026-03-22",
+    "endDate": "2026-05-25",
+    "totalTeams": 10,
+    "totalMatches": 74,
+    "format": "T20",
+    "dataVersion": "1.0",
+    "lastUpdated": "2026-05-23T18:00:00+05:30",
+    "note": "Mock data for hackathon use. Player stats are illustrative."
+  },
+
+  "teams": [
+    {
+      "id": "MI",
+      "name": "Mumbai Indians",
+      "shortName": "MI",
+      "city": "Mumbai",
+      "homeGround": "Wankhede Stadium",
+      "captain": "Hardik Pandya",
+      "coach": "Mahela Jayawardene",
+      "owner": "Reliance Industries",
+      "colors": { "primary": "#004BA0", "secondary": "#D1AB3E", "text": "#FFFFFF" },
+      "logoUrl": "https://example.com/logos/mi.png",
+      "titles": 5,
+      "tagline": "Duniya Hila Denge",
+      "established": 2008
+    },
+    {
+      "id": "CSK",
+      "name": "Chennai Super Kings",
+      "shortName": "CSK",
+      "city": "Chennai",
+      "homeGround": "MA Chidambaram Stadium",
+      "captain": "Ruturaj Gaikwad",
+      "coach": "Stephen Fleming",
+      "owner": "India Cements",
+      "colors": { "primary": "#F9CD05", "secondary": "#1C5BAF", "text": "#000000" },
+      "logoUrl": "https://example.com/logos/csk.png",
+      "titles": 5,
+      "tagline": "Whistle Podu",
+      "established": 2008
+    },
+    {
+      "id": "RCB",
+      "name": "Royal Challengers Bengaluru",
+      "shortName": "RCB",
+      "city": "Bengaluru",
+      "homeGround": "M Chinnaswamy Stadium",
+      "captain": "Rajat Patidar",
+      "coach": "Andy Flower",
+      "owner": "United Spirits",
+      "colors": { "primary": "#EC1C24", "secondary": "#000000", "text": "#FFFFFF" },
+      "logoUrl": "https://example.com/logos/rcb.png",
+      "titles": 1,
+      "tagline": "Ee Sala Cup Namde",
+      "established": 2008
+    },
+    {
+      "id": "KKR",
+      "name": "Kolkata Knight Riders",
+      "shortName": "KKR",
+      "city": "Kolkata",
+      "homeGround": "Eden Gardens",
+      "captain": "Ajinkya Rahane",
+      "coach": "Chandrakant Pandit",
+      "owner": "Red Chillies Entertainment",
+      "colors": { "primary": "#3A225D", "secondary": "#B3A123", "text": "#FFFFFF" },
+      "logoUrl": "https://example.com/logos/kkr.png",
+      "titles": 3,
+      "tagline": "Korbo Lorbo Jeetbo",
+      "established": 2008
+    },
+    {
+      "id": "SRH",
+      "name": "Sunrisers Hyderabad",
+      "shortName": "SRH",
+      "city": "Hyderabad",
+      "homeGround": "Rajiv Gandhi International Stadium",
+      "captain": "Pat Cummins",
+      "coach": "Daniel Vettori",
+      "owner": "Sun TV Network",
+      "colors": { "primary": "#FB643E", "secondary": "#000000", "text": "#FFFFFF" },
+      "logoUrl": "https://example.com/logos/srh.png",
+      "titles": 1,
+      "tagline": "Aaye Hain Jeetne",
+      "established": 2013
+    },
+    {
+      "id": "DC",
+      "name": "Delhi Capitals",
+      "shortName": "DC",
+      "city": "Delhi",
+      "homeGround": "Arun Jaitley Stadium",
+      "captain": "Axar Patel",
+      "coach": "Hemang Badani",
+      "owner": "GMR Group / JSW",
+      "colors": { "primary": "#17449B", "secondary": "#EF1B23", "text": "#FFFFFF" },
+      "logoUrl": "https://example.com/logos/dc.png",
+      "titles": 0,
+      "tagline": "Yeh Hai Nayi Dilli",
+      "established": 2008
+    },
+    {
+      "id": "PBKS",
+      "name": "Punjab Kings",
+      "shortName": "PBKS",
+      "city": "Mohali",
+      "homeGround": "PCA Stadium",
+      "captain": "Shreyas Iyer",
+      "coach": "Ricky Ponting",
+      "owner": "Preity Zinta, Mohit Burman",
+      "colors": { "primary": "#DD1F2D", "secondary": "#A7A9AC", "text": "#FFFFFF" },
+      "logoUrl": "https://example.com/logos/pbks.png",
+      "titles": 0,
+      "tagline": "Sadda Punjab",
+      "established": 2008
+    },
+    {
+      "id": "RR",
+      "name": "Rajasthan Royals",
+      "shortName": "RR",
+      "city": "Jaipur",
+      "homeGround": "Sawai Mansingh Stadium",
+      "captain": "Sanju Samson",
+      "coach": "Rahul Dravid",
+      "owner": "Manoj Badale",
+      "colors": { "primary": "#EA1A85", "secondary": "#254AA5", "text": "#FFFFFF" },
+      "logoUrl": "https://example.com/logos/rr.png",
+      "titles": 1,
+      "tagline": "Halla Bol",
+      "established": 2008
+    },
+    {
+      "id": "GT",
+      "name": "Gujarat Titans",
+      "shortName": "GT",
+      "city": "Ahmedabad",
+      "homeGround": "Narendra Modi Stadium",
+      "captain": "Shubman Gill",
+      "coach": "Ashish Nehra",
+      "owner": "CVC Capital",
+      "colors": { "primary": "#1C2C5B", "secondary": "#B3A123", "text": "#FFFFFF" },
+      "logoUrl": "https://example.com/logos/gt.png",
+      "titles": 1,
+      "tagline": "Aava De",
+      "established": 2022
+    },
+    {
+      "id": "LSG",
+      "name": "Lucknow Super Giants",
+      "shortName": "LSG",
+      "city": "Lucknow",
+      "homeGround": "Ekana Stadium",
+      "captain": "Rishabh Pant",
+      "coach": "Justin Langer",
+      "owner": "RPSG Group",
+      "colors": { "primary": "#A4DE02", "secondary": "#003366", "text": "#000000" },
+      "logoUrl": "https://example.com/logos/lsg.png",
+      "titles": 0,
+      "tagline": "Ab Apni Baari Hai",
+      "established": 2022
+    }
+  ],
+
+  "players": [
+    { "id": "p001", "name": "Rohit Sharma", "team": "MI", "role": "Batsman", "battingStyle": "Right-hand", "bowlingStyle": "Right-arm off-break", "age": 38, "country": "India", "stats": { "matches": 257, "runs": 6628, "average": 29.6, "strikeRate": 131.2, "fifties": 43, "hundreds": 2 }, "nickname": "Hitman", "salary": "16.30 Cr" },
+    { "id": "p002", "name": "Suryakumar Yadav", "team": "MI", "role": "Batsman", "battingStyle": "Right-hand", "bowlingStyle": "Right-arm medium", "age": 35, "country": "India", "stats": { "matches": 153, "runs": 3437, "average": 30.4, "strikeRate": 144.1, "fifties": 22, "hundreds": 2 }, "nickname": "SKY", "salary": "8.00 Cr" },
+    { "id": "p003", "name": "Hardik Pandya", "team": "MI", "role": "All-rounder", "battingStyle": "Right-hand", "bowlingStyle": "Right-arm fast-medium", "age": 32, "country": "India", "stats": { "matches": 142, "runs": 2685, "wickets": 64, "average": 30.5, "strikeRate": 144.0, "economy": 8.93 }, "nickname": "Kung Fu Pandya", "salary": "16.35 Cr" },
+    { "id": "p004", "name": "Jasprit Bumrah", "team": "MI", "role": "Bowler", "battingStyle": "Right-hand", "bowlingStyle": "Right-arm fast", "age": 32, "country": "India", "stats": { "matches": 133, "wickets": 165, "average": 22.5, "economy": 7.31, "bestBowling": "5/10" }, "nickname": "Boom Boom", "salary": "12.00 Cr" },
+    { "id": "p005", "name": "Tilak Varma", "team": "MI", "role": "Batsman", "battingStyle": "Left-hand", "age": 23, "country": "India", "stats": { "matches": 45, "runs": 1234, "average": 36.2, "strikeRate": 142.5, "fifties": 8, "hundreds": 0 }, "nickname": "Tilak", "salary": "8.00 Cr" },
+
+    { "id": "p011", "name": "Ruturaj Gaikwad", "team": "CSK", "role": "Batsman", "battingStyle": "Right-hand", "age": 29, "country": "India", "stats": { "matches": 78, "runs": 2627, "average": 39.2, "strikeRate": 138.0, "fifties": 20, "hundreds": 1 }, "nickname": "Ruturaj", "salary": "6.00 Cr" },
+    { "id": "p012", "name": "MS Dhoni", "team": "CSK", "role": "Wicket-keeper", "battingStyle": "Right-hand", "age": 44, "country": "India", "stats": { "matches": 264, "runs": 5243, "average": 38.8, "strikeRate": 137.5, "fifties": 24, "hundreds": 0 }, "nickname": "Captain Cool, Thala", "salary": "4.00 Cr" },
+    { "id": "p013", "name": "Ravindra Jadeja", "team": "CSK", "role": "All-rounder", "battingStyle": "Left-hand", "bowlingStyle": "Left-arm orthodox", "age": 37, "country": "India", "stats": { "matches": 254, "runs": 3098, "wickets": 168, "average": 26.8, "economy": 7.62 }, "nickname": "Sir Jadeja", "salary": "18.00 Cr" },
+    { "id": "p014", "name": "Shivam Dube", "team": "CSK", "role": "All-rounder", "battingStyle": "Left-hand", "bowlingStyle": "Right-arm medium", "age": 32, "country": "India", "stats": { "matches": 65, "runs": 1456, "wickets": 8, "average": 28.5, "strikeRate": 146.2 }, "nickname": "Dube", "salary": "5.00 Cr" },
+    { "id": "p015", "name": "Matheesha Pathirana", "team": "CSK", "role": "Bowler", "bowlingStyle": "Right-arm fast", "age": 23, "country": "Sri Lanka", "stats": { "matches": 32, "wickets": 48, "economy": 8.45, "bestBowling": "4/28" }, "nickname": "Baby Malinga", "salary": "13.00 Cr" },
+
+    { "id": "p021", "name": "Virat Kohli", "team": "RCB", "role": "Batsman", "battingStyle": "Right-hand", "age": 37, "country": "India", "stats": { "matches": 252, "runs": 8004, "average": 38.6, "strikeRate": 132.0, "fifties": 55, "hundreds": 8 }, "nickname": "King Kohli", "salary": "21.00 Cr" },
+    { "id": "p022", "name": "Rajat Patidar", "team": "RCB", "role": "Batsman", "battingStyle": "Right-hand", "age": 32, "country": "India", "stats": { "matches": 48, "runs": 1287, "average": 32.0, "strikeRate": 145.6, "fifties": 7, "hundreds": 1 }, "nickname": "Patidar", "salary": "11.00 Cr" },
+    { "id": "p023", "name": "Faf du Plessis", "team": "RCB", "role": "Batsman", "battingStyle": "Right-hand", "age": 41, "country": "South Africa", "stats": { "matches": 145, "runs": 4773, "average": 35.0, "strikeRate": 134.5, "fifties": 34, "hundreds": 1 }, "nickname": "Faf", "salary": "7.00 Cr" },
+    { "id": "p024", "name": "Krunal Pandya", "team": "RCB", "role": "All-rounder", "battingStyle": "Left-hand", "bowlingStyle": "Left-arm orthodox", "age": 35, "country": "India", "stats": { "matches": 122, "runs": 1565, "wickets": 73, "economy": 7.46 }, "nickname": "Krunal", "salary": "5.75 Cr" },
+    { "id": "p025", "name": "Yash Dayal", "team": "RCB", "role": "Bowler", "bowlingStyle": "Left-arm fast-medium", "age": 28, "country": "India", "stats": { "matches": 25, "wickets": 28, "economy": 9.15, "bestBowling": "3/22" }, "nickname": "Yash", "salary": "5.00 Cr" },
+
+    { "id": "p031", "name": "Ajinkya Rahane", "team": "KKR", "role": "Batsman", "battingStyle": "Right-hand", "age": 37, "country": "India", "stats": { "matches": 184, "runs": 4400, "average": 30.7, "strikeRate": 124.0, "fifties": 31, "hundreds": 2 }, "nickname": "Jinks", "salary": "1.50 Cr" },
+    { "id": "p032", "name": "Andre Russell", "team": "KKR", "role": "All-rounder", "battingStyle": "Right-hand", "bowlingStyle": "Right-arm fast", "age": 38, "country": "West Indies", "stats": { "matches": 122, "runs": 2556, "wickets": 113, "strikeRate": 174.5, "economy": 9.10 }, "nickname": "Dre Russ", "salary": "12.00 Cr" },
+    { "id": "p033", "name": "Sunil Narine", "team": "KKR", "role": "All-rounder", "battingStyle": "Left-hand", "bowlingStyle": "Right-arm off-break", "age": 38, "country": "West Indies", "stats": { "matches": 178, "runs": 1534, "wickets": 187, "economy": 6.78 }, "nickname": "The Mystery Man", "salary": "12.00 Cr" },
+    { "id": "p034", "name": "Rinku Singh", "team": "KKR", "role": "Batsman", "battingStyle": "Left-hand", "age": 28, "country": "India", "stats": { "matches": 60, "runs": 1456, "average": 36.0, "strikeRate": 152.0, "fifties": 5, "hundreds": 0 }, "nickname": "Finisher Rinku", "salary": "5.25 Cr" },
+    { "id": "p035", "name": "Varun Chakaravarthy", "team": "KKR", "role": "Bowler", "bowlingStyle": "Right-arm leg-break", "age": 34, "country": "India", "stats": { "matches": 65, "wickets": 80, "economy": 7.40, "bestBowling": "5/15" }, "nickname": "Mystery Spinner", "salary": "8.00 Cr" },
+
+    { "id": "p041", "name": "Pat Cummins", "team": "SRH", "role": "All-rounder", "battingStyle": "Right-hand", "bowlingStyle": "Right-arm fast", "age": 33, "country": "Australia", "stats": { "matches": 53, "runs": 645, "wickets": 56, "economy": 8.60 }, "nickname": "Patty", "salary": "20.50 Cr" },
+    { "id": "p042", "name": "Travis Head", "team": "SRH", "role": "Batsman", "battingStyle": "Left-hand", "age": 32, "country": "Australia", "stats": { "matches": 28, "runs": 956, "average": 38.2, "strikeRate": 188.5, "fifties": 6, "hundreds": 1 }, "nickname": "Heady", "salary": "6.80 Cr" },
+    { "id": "p043", "name": "Abhishek Sharma", "team": "SRH", "role": "All-rounder", "battingStyle": "Left-hand", "bowlingStyle": "Left-arm orthodox", "age": 25, "country": "India", "stats": { "matches": 50, "runs": 1265, "wickets": 12, "strikeRate": 175.0, "fifties": 7 }, "nickname": "AB", "salary": "6.80 Cr" },
+    { "id": "p044", "name": "Heinrich Klaasen", "team": "SRH", "role": "Wicket-keeper", "battingStyle": "Right-hand", "age": 34, "country": "South Africa", "stats": { "matches": 45, "runs": 1456, "average": 39.3, "strikeRate": 175.8, "fifties": 10, "hundreds": 1 }, "nickname": "Klaasen", "salary": "23.00 Cr" },
+    { "id": "p045", "name": "Bhuvneshwar Kumar", "team": "SRH", "role": "Bowler", "bowlingStyle": "Right-arm medium-fast", "age": 36, "country": "India", "stats": { "matches": 176, "wickets": 181, "economy": 7.40, "bestBowling": "5/19" }, "nickname": "Bhuvi", "salary": "10.75 Cr" },
+
+    { "id": "p051", "name": "Axar Patel", "team": "DC", "role": "All-rounder", "battingStyle": "Left-hand", "bowlingStyle": "Left-arm orthodox", "age": 32, "country": "India", "stats": { "matches": 144, "runs": 1689, "wickets": 117, "economy": 7.34 }, "nickname": "Axar", "salary": "9.00 Cr" },
+    { "id": "p052", "name": "KL Rahul", "team": "DC", "role": "Wicket-keeper", "battingStyle": "Right-hand", "age": 33, "country": "India", "stats": { "matches": 132, "runs": 4683, "average": 46.4, "strikeRate": 136.0, "fifties": 36, "hundreds": 4 }, "nickname": "KLR", "salary": "14.00 Cr" },
+    { "id": "p053", "name": "Tristan Stubbs", "team": "DC", "role": "Batsman", "battingStyle": "Right-hand", "age": 25, "country": "South Africa", "stats": { "matches": 26, "runs": 645, "average": 35.8, "strikeRate": 158.0, "fifties": 4 }, "nickname": "Stubbsy", "salary": "6.75 Cr" },
+    { "id": "p054", "name": "Kuldeep Yadav", "team": "DC", "role": "Bowler", "bowlingStyle": "Left-arm chinaman", "age": 30, "country": "India", "stats": { "matches": 89, "wickets": 87, "economy": 8.30, "bestBowling": "4/14" }, "nickname": "Kul", "salary": "13.25 Cr" },
+    { "id": "p055", "name": "Mitchell Starc", "team": "DC", "role": "Bowler", "bowlingStyle": "Left-arm fast", "age": 36, "country": "Australia", "stats": { "matches": 41, "wickets": 50, "economy": 8.70, "bestBowling": "4/15" }, "nickname": "Starcy", "salary": "11.75 Cr" },
+
+    { "id": "p061", "name": "Shreyas Iyer", "team": "PBKS", "role": "Batsman", "battingStyle": "Right-hand", "age": 31, "country": "India", "stats": { "matches": 119, "runs": 3127, "average": 33.6, "strikeRate": 127.0, "fifties": 22, "hundreds": 1 }, "nickname": "Shrey", "salary": "26.75 Cr" },
+    { "id": "p062", "name": "Arshdeep Singh", "team": "PBKS", "role": "Bowler", "bowlingStyle": "Left-arm fast-medium", "age": 27, "country": "India", "stats": { "matches": 75, "wickets": 99, "economy": 8.80, "bestBowling": "4/29" }, "nickname": "Arsh", "salary": "18.00 Cr" },
+    { "id": "p063", "name": "Shashank Singh", "team": "PBKS", "role": "Batsman", "battingStyle": "Right-hand", "age": 34, "country": "India", "stats": { "matches": 30, "runs": 750, "average": 36.0, "strikeRate": 165.0, "fifties": 4 }, "nickname": "Shashank", "salary": "1.40 Cr" },
+    { "id": "p064", "name": "Prabhsimran Singh", "team": "PBKS", "role": "Wicket-keeper", "battingStyle": "Right-hand", "age": 25, "country": "India", "stats": { "matches": 32, "runs": 945, "average": 30.5, "strikeRate": 158.0, "fifties": 5 }, "nickname": "Prabh", "salary": "4.00 Cr" },
+    { "id": "p065", "name": "Yuzvendra Chahal", "team": "PBKS", "role": "Bowler", "bowlingStyle": "Right-arm leg-break", "age": 35, "country": "India", "stats": { "matches": 160, "wickets": 211, "economy": 7.80, "bestBowling": "5/40" }, "nickname": "Yuzi", "salary": "18.00 Cr" },
+
+    { "id": "p071", "name": "Sanju Samson", "team": "RR", "role": "Wicket-keeper", "battingStyle": "Right-hand", "age": 31, "country": "India", "stats": { "matches": 156, "runs": 4078, "average": 30.4, "strikeRate": 138.5, "fifties": 25, "hundreds": 3 }, "nickname": "Sanju", "salary": "18.00 Cr" },
+    { "id": "p072", "name": "Yashasvi Jaiswal", "team": "RR", "role": "Batsman", "battingStyle": "Left-hand", "age": 24, "country": "India", "stats": { "matches": 56, "runs": 2098, "average": 41.0, "strikeRate": 152.0, "fifties": 12, "hundreds": 1 }, "nickname": "Yash", "salary": "4.00 Cr" },
+    { "id": "p073", "name": "Riyan Parag", "team": "RR", "role": "All-rounder", "battingStyle": "Right-hand", "bowlingStyle": "Right-arm off-break", "age": 24, "country": "India", "stats": { "matches": 78, "runs": 1456, "wickets": 7, "strikeRate": 144.0 }, "nickname": "Riyan", "salary": "14.00 Cr" },
+    { "id": "p074", "name": "Jofra Archer", "team": "RR", "role": "Bowler", "bowlingStyle": "Right-arm fast", "age": 30, "country": "England", "stats": { "matches": 47, "wickets": 56, "economy": 7.85, "bestBowling": "3/15" }, "nickname": "Jofra", "salary": "12.50 Cr" },
+    { "id": "p075", "name": "Sandeep Sharma", "team": "RR", "role": "Bowler", "bowlingStyle": "Right-arm medium", "age": 32, "country": "India", "stats": { "matches": 110, "wickets": 119, "economy": 7.94, "bestBowling": "4/20" }, "nickname": "Sandy", "salary": "1.50 Cr" },
+
+    { "id": "p081", "name": "Shubman Gill", "team": "GT", "role": "Batsman", "battingStyle": "Right-hand", "age": 26, "country": "India", "stats": { "matches": 103, "runs": 3475, "average": 38.7, "strikeRate": 137.6, "fifties": 25, "hundreds": 4 }, "nickname": "Prince", "salary": "16.50 Cr" },
+    { "id": "p082", "name": "Sai Sudharsan", "team": "GT", "role": "Batsman", "battingStyle": "Left-hand", "age": 24, "country": "India", "stats": { "matches": 30, "runs": 1098, "average": 42.0, "strikeRate": 140.0, "fifties": 9, "hundreds": 1 }, "nickname": "Sai", "salary": "8.50 Cr" },
+    { "id": "p083", "name": "Rashid Khan", "team": "GT", "role": "All-rounder", "battingStyle": "Right-hand", "bowlingStyle": "Right-arm leg-break", "age": 27, "country": "Afghanistan", "stats": { "matches": 117, "runs": 685, "wickets": 139, "economy": 6.85 }, "nickname": "Rash", "salary": "18.00 Cr" },
+    { "id": "p084", "name": "Mohammed Siraj", "team": "GT", "role": "Bowler", "bowlingStyle": "Right-arm fast", "age": 32, "country": "India", "stats": { "matches": 95, "wickets": 99, "economy": 8.65, "bestBowling": "4/21" }, "nickname": "Miyan Bhai", "salary": "12.25 Cr" },
+    { "id": "p085", "name": "Kagiso Rabada", "team": "GT", "role": "Bowler", "bowlingStyle": "Right-arm fast", "age": 30, "country": "South Africa", "stats": { "matches": 73, "wickets": 119, "economy": 8.30, "bestBowling": "4/21" }, "nickname": "KG", "salary": "10.75 Cr" },
+
+    { "id": "p091", "name": "Rishabh Pant", "team": "LSG", "role": "Wicket-keeper", "battingStyle": "Left-hand", "age": 28, "country": "India", "stats": { "matches": 111, "runs": 3284, "average": 35.2, "strikeRate": 147.0, "fifties": 18, "hundreds": 1 }, "nickname": "Pant", "salary": "27.00 Cr" },
+    { "id": "p092", "name": "Nicholas Pooran", "team": "LSG", "role": "Wicket-keeper", "battingStyle": "Left-hand", "age": 30, "country": "West Indies", "stats": { "matches": 88, "runs": 2236, "average": 32.5, "strikeRate": 162.0, "fifties": 13, "hundreds": 0 }, "nickname": "Nicky P", "salary": "21.00 Cr" },
+    { "id": "p093", "name": "Mitchell Marsh", "team": "LSG", "role": "All-rounder", "battingStyle": "Right-hand", "bowlingStyle": "Right-arm medium-fast", "age": 34, "country": "Australia", "stats": { "matches": 39, "runs": 935, "wickets": 24, "strikeRate": 142.0 }, "nickname": "Marshy", "salary": "3.40 Cr" },
+    { "id": "p094", "name": "Ravi Bishnoi", "team": "LSG", "role": "Bowler", "bowlingStyle": "Right-arm leg-break", "age": 25, "country": "India", "stats": { "matches": 65, "wickets": 72, "economy": 8.10, "bestBowling": "4/22" }, "nickname": "Bishnoi", "salary": "10.75 Cr" },
+    { "id": "p095", "name": "Avesh Khan", "team": "LSG", "role": "Bowler", "bowlingStyle": "Right-arm fast-medium", "age": 29, "country": "India", "stats": { "matches": 56, "wickets": 60, "economy": 8.90, "bestBowling": "4/24" }, "nickname": "Avesh", "salary": "9.75 Cr" }
+  ],
+
+  "venues": [
+    { "id": "v01", "name": "Wankhede Stadium", "city": "Mumbai", "capacity": 33108, "avgFirstInningsScore": 175, "pitchType": "Batting-friendly", "knownFor": "High scoring, dew factor" },
+    { "id": "v02", "name": "MA Chidambaram Stadium", "city": "Chennai", "capacity": 50000, "avgFirstInningsScore": 162, "pitchType": "Spin-friendly", "knownFor": "Slow turner, hot weather" },
+    { "id": "v03", "name": "M Chinnaswamy Stadium", "city": "Bengaluru", "capacity": 40000, "avgFirstInningsScore": 185, "pitchType": "Batting paradise", "knownFor": "Small boundaries, high scoring" },
+    { "id": "v04", "name": "Eden Gardens", "city": "Kolkata", "capacity": 68000, "avgFirstInningsScore": 168, "pitchType": "Balanced", "knownFor": "Atmosphere, iconic ground" },
+    { "id": "v05", "name": "Rajiv Gandhi International Stadium", "city": "Hyderabad", "capacity": 55000, "avgFirstInningsScore": 178, "pitchType": "Batting-friendly", "knownFor": "True bounce" },
+    { "id": "v06", "name": "Arun Jaitley Stadium", "city": "Delhi", "capacity": 41842, "avgFirstInningsScore": 170, "pitchType": "Balanced", "knownFor": "Reverse swing in evening" },
+    { "id": "v07", "name": "PCA Stadium", "city": "Mohali", "capacity": 26950, "avgFirstInningsScore": 172, "pitchType": "Pace-friendly", "knownFor": "Bounce and carry" },
+    { "id": "v08", "name": "Sawai Mansingh Stadium", "city": "Jaipur", "capacity": 30000, "avgFirstInningsScore": 169, "pitchType": "Balanced", "knownFor": "Pink city atmosphere" },
+    { "id": "v09", "name": "Narendra Modi Stadium", "city": "Ahmedabad", "capacity": 132000, "avgFirstInningsScore": 167, "pitchType": "Balanced", "knownFor": "World's largest cricket stadium" },
+    { "id": "v10", "name": "Ekana Stadium", "city": "Lucknow", "capacity": 50000, "avgFirstInningsScore": 158, "pitchType": "Bowler-friendly", "knownFor": "Slow surface" }
+  ],
+
+  "pointsTable": [
+    { "rank": 1, "team": "GT", "played": 14, "won": 10, "lost": 4, "noResult": 0, "points": 20, "netRunRate": 0.748, "form": ["W","W","L","W","W"] },
+    { "rank": 2, "team": "RCB", "played": 14, "won": 9, "lost": 4, "noResult": 1, "points": 19, "netRunRate": 0.521, "form": ["W","W","W","L","W"] },
+    { "rank": 3, "team": "PBKS", "played": 14, "won": 9, "lost": 5, "noResult": 0, "points": 18, "netRunRate": 0.376, "form": ["W","L","W","W","W"] },
+    { "rank": 4, "team": "MI", "played": 14, "won": 8, "lost": 6, "noResult": 0, "points": 16, "netRunRate": 0.412, "form": ["W","W","L","W","L"] },
+    { "rank": 5, "team": "DC", "played": 14, "won": 7, "lost": 7, "noResult": 0, "points": 14, "netRunRate": 0.011, "form": ["L","W","L","W","L"] },
+    { "rank": 6, "team": "LSG", "played": 14, "won": 6, "lost": 8, "noResult": 0, "points": 12, "netRunRate": -0.156, "form": ["L","W","L","L","W"] },
+    { "rank": 7, "team": "KKR", "played": 14, "won": 5, "lost": 8, "noResult": 1, "points": 11, "netRunRate": -0.198, "form": ["L","L","W","L","W"] },
+    { "rank": 8, "team": "RR", "played": 14, "won": 4, "lost": 10, "noResult": 0, "points": 8, "netRunRate": -0.349, "form": ["L","L","W","L","L"] },
+    { "rank": 9, "team": "SRH", "played": 14, "won": 4, "lost": 10, "noResult": 0, "points": 8, "netRunRate": -0.470, "form": ["L","L","L","W","L"] },
+    { "rank": 10, "team": "CSK", "played": 14, "won": 3, "lost": 10, "noResult": 1, "points": 7, "netRunRate": -0.682, "form": ["L","L","L","L","W"] }
+  ],
+
+  "recentMatches": [
+    { "id": "m65", "date": "2026-05-20", "team1": "KKR", "team2": "MI", "venue": "Eden Gardens", "team1Score": "168/7 (20)", "team2Score": "171/4 (19.2)", "winner": "MI", "margin": "6 wickets", "playerOfMatch": "Suryakumar Yadav" },
+    { "id": "m66", "date": "2026-05-21", "team1": "RR", "team2": "PBKS", "venue": "Sawai Mansingh Stadium", "team1Score": "187/8 (20)", "team2Score": "190/5 (19.4)", "winner": "PBKS", "margin": "5 wickets", "playerOfMatch": "Shreyas Iyer" },
+    { "id": "m67", "date": "2026-05-22", "team1": "RCB", "team2": "DC", "venue": "M Chinnaswamy Stadium", "team1Score": "206/4 (20)", "team2Score": "184/9 (20)", "winner": "RCB", "margin": "22 runs", "playerOfMatch": "Virat Kohli" },
+    { "id": "m68", "date": "2026-05-22", "team1": "LSG", "team2": "SRH", "venue": "Ekana Stadium", "team1Score": "165/7 (20)", "team2Score": "162/9 (20)", "winner": "LSG", "margin": "3 runs", "playerOfMatch": "Nicholas Pooran" },
+    { "id": "m69", "date": "2026-05-23", "team1": "LSG", "team2": "PBKS", "venue": "Ekana Stadium", "team1Score": "196/6 (20)", "team2Score": "In progress", "winner": "TBD", "status": "Live" }
+  ],
+
+  "upcomingMatches": [
+    {
+      "id": "m70",
+      "matchNumber": 69,
+      "date": "2026-05-24",
+      "day": "Sunday",
+      "startTime": "15:30",
+      "startTimeIST": "3:30 PM IST",
+      "type": "Afternoon (D/N)",
+      "team1": "MI",
+      "team2": "RR",
+      "venue": {
+        "name": "Wankhede Stadium",
+        "city": "Mumbai",
+        "capacity": 33108,
+        "avgFirstInningsScore": 175,
+        "pitchReport": "True surface, batters' paradise once the new ball softens. Dew expected in second innings — chasing teams favored. Spinners get less help here.",
+        "boundaryDimensions": { "straight": "65m", "square": "62m" }
+      },
+      "playoffImplications": "Final league match for both teams. MI fighting for top-4 spot. RR already eliminated but playing for pride and spoiler role.",
+      "headToHead": {
+        "totalMatches": 32,
+        "team1Wins": 17,
+        "team2Wins": 14,
+        "noResult": 1,
+        "lastFiveResults": ["MI", "RR", "MI", "MI", "RR"]
+      },
+      "predictedXI": {
+        "MI": ["Rohit Sharma", "Ryan Rickelton", "Suryakumar Yadav", "Tilak Varma", "Hardik Pandya (c)", "Naman Dhir", "Mitchell Santner", "Deepak Chahar", "Trent Boult", "Jasprit Bumrah", "Karn Sharma"],
+        "RR": ["Yashasvi Jaiswal", "Vaibhav Suryavanshi", "Riyan Parag", "Nitish Rana", "Sanju Samson (c) (wk)", "Dhruv Jurel", "Shubham Dubey", "Wanindu Hasaranga", "Jofra Archer", "Sandeep Sharma", "Tushar Deshpande"]
+      },
+      "keyMatchups": [
+        { "matchup": "Jasprit Bumrah vs Yashasvi Jaiswal", "note": "Jaiswal averages 14 against Bumrah in IPL — Bumrah's bunny" },
+        { "matchup": "Suryakumar Yadav vs Jofra Archer", "note": "SKY's 360-degree game vs Archer's pace and bounce" },
+        { "matchup": "Hardik Pandya vs Wanindu Hasaranga", "note": "Power hitter vs wrist spinner battle in middle overs" }
+      ],
+      "form": {
+        "MI": ["W","W","L","W","L"],
+        "RR": ["L","L","W","L","L"]
+      },
+      "weather": {
+        "temperature": 32,
+        "humidity": 78,
+        "windSpeed": 14,
+        "rainChance": 10,
+        "dewFactor": "High in second innings"
+      },
+      "toss": {
+        "expectedDecision": "Bowl first if won, due to dew factor",
+        "tossWinPercentage": { "battingFirst": 42, "bowlingFirst": 58 }
+      },
+      "prediction": {
+        "favorite": "MI",
+        "winProbability": { "MI": 62, "RR": 38 },
+        "expectedFirstInningsScore": "185-200",
+        "matchupOdds": { "MI": 1.55, "RR": 2.45 }
+      },
+      "broadcast": {
+        "tv": "Star Sports Network",
+        "streaming": "JioHotstar",
+        "languages": ["English", "Hindi", "Tamil", "Telugu", "Kannada", "Bengali", "Marathi"]
+      }
+    },
+    {
+      "id": "m71",
+      "matchNumber": 70,
+      "date": "2026-05-24",
+      "day": "Sunday",
+      "startTime": "19:30",
+      "startTimeIST": "7:30 PM IST",
+      "type": "Evening (Night)",
+      "team1": "KKR",
+      "team2": "DC",
+      "venue": {
+        "name": "Eden Gardens",
+        "city": "Kolkata",
+        "capacity": 68000,
+        "avgFirstInningsScore": 168,
+        "pitchReport": "Slightly two-paced, spinners get grip after the 8th over. Heavy dew expected — chasing strongly favored. Crowd of 60,000+ will create electric atmosphere.",
+        "boundaryDimensions": { "straight": "68m", "square": "66m" }
+      },
+      "playoffImplications": "MUST-WIN for both teams. KKR (5th, 13 pts) needs win + favorable NRR to sneak into top 4. DC (4th, 14 pts) wins and they're through to playoffs. A loss for DC opens the door for MI/PBKS. Net Run Rate could be decisive.",
+      "headToHead": {
+        "totalMatches": 36,
+        "team1Wins": 19,
+        "team2Wins": 16,
+        "noResult": 1,
+        "lastFiveResults": ["DC", "KKR", "KKR", "DC", "KKR"]
+      },
+      "predictedXI": {
+        "KKR": ["Sunil Narine", "Quinton de Kock (wk)", "Ajinkya Rahane (c)", "Venkatesh Iyer", "Rinku Singh", "Andre Russell", "Ramandeep Singh", "Anukul Roy", "Harshit Rana", "Vaibhav Arora", "Varun Chakaravarthy"],
+        "DC": ["Faf du Plessis", "Abishek Porel (wk)", "KL Rahul", "Tristan Stubbs", "Axar Patel (c)", "Sameer Rizvi", "Vipraj Nigam", "Mitchell Starc", "Kuldeep Yadav", "Mukesh Kumar", "T Natarajan"]
+      },
+      "keyMatchups": [
+        { "matchup": "Varun Chakaravarthy vs KL Rahul", "note": "Mystery spin vs the most technically sound batter in IPL — defining duel" },
+        { "matchup": "Andre Russell vs Mitchell Starc", "note": "Death overs — Russell's hitting vs Starc's yorkers" },
+        { "matchup": "Sunil Narine vs KL Rahul / Faf", "note": "Powerplay battle on a turning Eden track" },
+        { "matchup": "Kuldeep Yadav vs Rinku Singh", "note": "Wrist spin vs left-hander, slog overs decider" }
+      ],
+      "form": {
+        "KKR": ["L","L","W","L","W"],
+        "DC": ["L","W","L","W","L"]
+      },
+      "weather": {
+        "temperature": 30,
+        "humidity": 85,
+        "windSpeed": 8,
+        "rainChance": 25,
+        "dewFactor": "Very High — chasing significantly favored"
+      },
+      "toss": {
+        "expectedDecision": "Bowl first — dew will make chasing easier",
+        "tossWinPercentage": { "battingFirst": 38, "bowlingFirst": 62 }
+      },
+      "prediction": {
+        "favorite": "DC",
+        "winProbability": { "KKR": 47, "DC": 53 },
+        "expectedFirstInningsScore": "170-185",
+        "matchupOdds": { "KKR": 2.05, "DC": 1.78 }
+      },
+      "broadcast": {
+        "tv": "Star Sports Network",
+        "streaming": "JioHotstar",
+        "languages": ["English", "Hindi", "Tamil", "Telugu", "Kannada", "Bengali", "Marathi"]
+      },
+      "storylines": [
+        "Last chance for KKR to defend their 2024 title legacy by making playoffs",
+        "KL Rahul's first season at DC ending — will he sign off with a big knock at his old hunting ground?",
+        "Russell's possibly last Eden Gardens IPL game — fans expect fireworks",
+        "Varun Chakaravarthy fighting for Purple Cap on home turf",
+        "Axar Patel's leadership debut season — playoff berth would seal his captaincy credentials"
+      ],
+      "fantasyTips": {
+        "captainPicks": ["KL Rahul", "Andre Russell", "Varun Chakaravarthy"],
+        "viceCaptainPicks": ["Sunil Narine", "Tristan Stubbs", "Kuldeep Yadav"],
+        "differentialPicks": ["Rinku Singh", "Abishek Porel", "Harshit Rana"],
+        "avoidPicks": ["Out-of-form players resting for next season"]
+      },
+      "isHackathonMatch": true,
+      "hackathonNote": "This is the match playing during the Agentic Premier League hackathon (6 PM - 11 PM IST). Build something cricket-themed and demo it before the chase concludes!"
+    }
+  ],
+
+  "liveMatch": {
+    "id": "m69",
+    "status": "LIVE",
+    "team1": { "id": "CSK", "name": "Chennai Super Kings", "score": 178, "wickets": 5, "overs": 18.3 },
+    "team2": { "id": "GT", "name": "Gujarat Titans", "score": 0, "wickets": 0, "overs": 0 },
+    "venue": "MA Chidambaram Stadium, Chennai",
+    "toss": "CSK won the toss and elected to bat",
+    "innings": 1,
+    "currentBatsmen": [
+      { "name": "Ravindra Jadeja", "runs": 34, "balls": 18, "fours": 3, "sixes": 2, "strikeRate": 188.8, "onStrike": true },
+      { "name": "MS Dhoni", "runs": 21, "balls": 9, "fours": 1, "sixes": 2, "strikeRate": 233.3, "onStrike": false }
+    ],
+    "currentBowler": { "name": "Mohammed Siraj", "overs": 3.3, "runs": 38, "wickets": 1, "economy": 10.85 },
+    "requiredRunRate": null,
+    "currentRunRate": 9.62,
+    "lastSixBalls": ["1","4","W","6","2","1"],
+    "partnership": { "runs": 47, "balls": 22 },
+    "fallOfWickets": [
+      { "wicket": 1, "score": 32, "over": 4.2, "batsman": "Ruturaj Gaikwad", "dismissal": "c Gill b Siraj" },
+      { "wicket": 2, "score": 56, "over": 7.5, "batsman": "Rachin Ravindra", "dismissal": "b Rashid Khan" },
+      { "wicket": 3, "score": 98, "over": 12.4, "batsman": "Shivam Dube", "dismissal": "c Sudharsan b Rashid Khan" },
+      { "wicket": 4, "score": 115, "over": 14.1, "batsman": "Sam Curran", "dismissal": "run out (Gill)" },
+      { "wicket": 5, "score": 131, "over": 16.2, "batsman": "Daryl Mitchell", "dismissal": "c Rabada b Siraj" }
+    ],
+    "ballByBall": [
+      { "over": 18.1, "bowler": "Siraj", "batsman": "Jadeja", "outcome": "1", "commentary": "Driven to long off for a single" },
+      { "over": 18.2, "bowler": "Siraj", "batsman": "Dhoni", "outcome": "4", "commentary": "Helicopter flick! Dhoni rolls back the years" },
+      { "over": 18.3, "bowler": "Siraj", "batsman": "Dhoni", "outcome": "W", "commentary": "GONE! Top edge, taken at fine leg" }
+    ]
+  },
+
+  "fantasyData": {
+    "topPerformers": [
+      { "player": "Virat Kohli", "team": "RCB", "matches": 14, "runs": 632, "average": 52.6, "strikeRate": 158.4, "fantasyPointsAvg": 75.4 },
+      { "player": "Travis Head", "team": "SRH", "matches": 12, "runs": 567, "average": 47.2, "strikeRate": 192.5, "fantasyPointsAvg": 71.2 },
+      { "player": "Suryakumar Yadav", "team": "MI", "matches": 14, "runs": 521, "average": 40.0, "strikeRate": 168.0, "fantasyPointsAvg": 68.5 },
+      { "player": "Shubman Gill", "team": "GT", "matches": 14, "runs": 545, "average": 41.9, "strikeRate": 145.2, "fantasyPointsAvg": 64.3 },
+      { "player": "Sai Sudharsan", "team": "GT", "matches": 13, "runs": 498, "average": 38.3, "strikeRate": 142.0, "fantasyPointsAvg": 58.7 }
+    ],
+    "topWicketTakers": [
+      { "player": "Varun Chakaravarthy", "team": "KKR", "matches": 14, "wickets": 22, "economy": 7.35, "fantasyPointsAvg": 62.3 },
+      { "player": "Yuzvendra Chahal", "team": "PBKS", "matches": 14, "wickets": 21, "economy": 8.10, "fantasyPointsAvg": 58.4 },
+      { "player": "Jasprit Bumrah", "team": "MI", "matches": 13, "wickets": 19, "economy": 6.75, "fantasyPointsAvg": 64.1 },
+      { "player": "Rashid Khan", "team": "GT", "matches": 14, "wickets": 18, "economy": 6.95, "fantasyPointsAvg": 56.8 },
+      { "player": "Arshdeep Singh", "team": "PBKS", "matches": 14, "wickets": 19, "economy": 8.95, "fantasyPointsAvg": 53.2 }
+    ],
+    "captainPicks": [
+      { "player": "Virat Kohli", "reason": "In red-hot form, scored 50+ in last 4 matches" },
+      { "player": "Travis Head", "reason": "Explosive opener, highest strike rate this season" },
+      { "player": "Rashid Khan", "reason": "Bowling all-rounder, double points potential" }
+    ]
+  },
+
+  "commentarySamples": {
+    "hype": [
+      "OH MY GOODNESS! What a shot! That's gone all the way over the stands!",
+      "BOOM! Maximum! He's middled it perfectly, the crowd is on its feet!",
+      "INCREDIBLE! He's done it again! This man is a magician with the willow!",
+      "STRAIGHT INTO THE STANDS! That deserves a slow-motion replay and a poem!"
+    ],
+    "tense": [
+      "Tight over, just 3 runs and a wicket. The pressure is mounting now.",
+      "Two dot balls in a row. The required rate is climbing dangerously.",
+      "Field set perfectly, the batter has nowhere to go. This is intense stuff.",
+      "Quiet over, the bowlers have squeezed the life out of this innings."
+    ],
+    "wicket": [
+      "GONE! Plumb in front! The umpire's finger is up!",
+      "BOWLED HIM! What a delivery, that ripped past the bat like a missile!",
+      "CAUGHT! Brilliant catch at deep midwicket, the fielder dives full length!",
+      "STUMPED! Quick hands behind the wicket, he was way out of his crease!"
+    ],
+    "harshaBhogle": [
+      "And the question is — can he hold his nerve? The cauldron of Chinnaswamy demands its hero tonight.",
+      "Cricket, as they say, is a game of inches and moments. This was both.",
+      "You can write the script, but the players write the poetry.",
+      "This is what they pay for — a packed house, a tight finish, hope and despair in equal measure."
+    ],
+    "regional_hindi": [
+      "Arre wah! Kya shot maara hai bhai!",
+      "Chakka! Gend stadium se bahar! Kamaal kar diya!",
+      "Bowler ki halat kharaab hai, fielders bhi pareshan!",
+      "Yeh match toh aaj rangeen ho gaya, dosto!"
+    ],
+    "sledge": [
+      "He's been at the crease longer than a Chennai summer — and just as suffocating.",
+      "If batting were a queue at the DMV, this innings would be the line ahead of you.",
+      "The bowler's economy is starting to look like petrol prices — going up every over.",
+      "This fielder couldn't catch a cold in a snowstorm."
+    ]
+  },
+
+  "trivia": [
+    { "id": "t1", "fact": "MS Dhoni has captained CSK in over 200 IPL matches, the most by any captain for a single franchise." },
+    { "id": "t2", "fact": "Chris Gayle holds the record for the highest individual score in IPL — 175* off 66 balls for RCB in 2013." },
+    { "id": "t3", "fact": "Yuzvendra Chahal is the all-time leading wicket-taker in IPL history with over 200 wickets." },
+    { "id": "t4", "fact": "Virat Kohli is the only player to have scored over 8000 runs in IPL history." },
+    { "id": "t5", "fact": "The Mumbai Indians have won 5 IPL titles — the most by any franchise (tied with CSK)." },
+    { "id": "t6", "fact": "The fastest century in IPL history was scored by Chris Gayle in just 30 balls." },
+    { "id": "t7", "fact": "Rinku Singh famously hit 5 sixes in the last over to win a match for KKR in 2023." },
+    { "id": "t8", "fact": "Lasith Malinga has the most wickets in a single IPL match — 5/13 in 2011." },
+    { "id": "t9", "fact": "AB de Villiers' 31-ball 89 in 2015 is considered one of the greatest IPL knocks ever." },
+    { "id": "t10", "fact": "The Narendra Modi Stadium in Ahmedabad is the world's largest cricket stadium with a capacity of 132,000." },
+    { "id": "t11", "fact": "Sunil Narine and Andre Russell are the only two players to have represented KKR in 100+ matches as overseas players." },
+    { "id": "t12", "fact": "Rohit Sharma is the only player to have led a team to 5 IPL titles." }
+  ],
+
+  "iplHistory": {
+    "champions": [
+      { "year": 2008, "winner": "RR" }, { "year": 2009, "winner": "DC" }, { "year": 2010, "winner": "CSK" },
+      { "year": 2011, "winner": "CSK" }, { "year": 2012, "winner": "KKR" }, { "year": 2013, "winner": "MI" },
+      { "year": 2014, "winner": "KKR" }, { "year": 2015, "winner": "MI" }, { "year": 2016, "winner": "SRH" },
+      { "year": 2017, "winner": "MI" }, { "year": 2018, "winner": "CSK" }, { "year": 2019, "winner": "MI" },
+      { "year": 2020, "winner": "MI" }, { "year": 2021, "winner": "CSK" }, { "year": 2022, "winner": "GT" },
+      { "year": 2023, "winner": "CSK" }, { "year": 2024, "winner": "KKR" }, { "year": 2025, "winner": "RCB" }
+    ],
+    "records": {
+      "highestTeamScore": { "team": "SRH", "score": "287/3", "vs": "RCB", "year": 2024 },
+      "lowestTeamScore": { "team": "RCB", "score": "49", "vs": "KKR", "year": 2017 },
+      "highestIndividualScore": { "player": "Chris Gayle", "score": "175*", "team": "RCB", "year": 2013 },
+      "fastestCentury": { "player": "Chris Gayle", "balls": 30, "team": "RCB", "year": 2013 },
+      "mostRuns": { "player": "Virat Kohli", "runs": 8004 },
+      "mostWickets": { "player": "Yuzvendra Chahal", "wickets": 211 },
+      "mostSixes": { "player": "Chris Gayle", "sixes": 357 }
+    }
+  },
+
+  "weatherConditions": [
+    { "venue": "Wankhede Stadium", "temperature": 32, "humidity": 75, "dewProbability": "High", "windSpeed": 12 },
+    { "venue": "MA Chidambaram Stadium", "temperature": 36, "humidity": 70, "dewProbability": "Low", "windSpeed": 8 },
+    { "venue": "M Chinnaswamy Stadium", "temperature": 27, "humidity": 60, "dewProbability": "Medium", "windSpeed": 10 },
+    { "venue": "Eden Gardens", "temperature": 30, "humidity": 80, "dewProbability": "High", "windSpeed": 6 },
+    { "venue": "Narendra Modi Stadium", "temperature": 34, "humidity": 55, "dewProbability": "Low", "windSpeed": 14 }
+  ]
+}
