@@ -41,16 +41,21 @@ IS_WINDOWS = os.name == "nt"
 # having to guess the extension.
 SHELL = IS_WINDOWS
 
-ENV_TEMPLATE = """\
-# === Required for AI features (Why? / Roast) ===
-# https://aistudio.google.com/apikey
-GEMINI_API_KEY=
+# Hackathon-shared keys. Rotate after the event — anyone with the repo gets
+# these. (Firebase web keys are public-by-design and gated by Firestore rules.)
+HACKATHON_KEYS: dict[str, str] = {
+    "GEMINI_API_KEY": "AIzaSyAmvtaURbOU7Vs2IU7CGvEo7iKDHcQaYcU",
+    "CRICAPI_KEY": "a7e81b3b-90ce-47db-98fe-71cc15c98c8b",
+}
 
-# === Required for live cricket scores ===
-# Free key: https://cricketdata.org
-CRICAPI_KEY=
+ENV_TEMPLATE = f"""\
+# === AI features (Why? / Roast) — hackathon key, will be rotated ===
+GEMINI_API_KEY={HACKATHON_KEYS["GEMINI_API_KEY"]}
 
-# === Required for Cricket Tinder (Firebase Firestore) ===
+# === Live cricket scores (CricAPI) ===
+CRICAPI_KEY={HACKATHON_KEYS["CRICAPI_KEY"]}
+
+# === Cricket Tinder (Firebase Firestore) — fill these from Firebase Console ===
 # Firebase console → Project Settings → Your apps → Web app config
 NEXT_PUBLIC_FIREBASE_API_KEY=
 NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
@@ -147,19 +152,26 @@ def ensure_env() -> dict[str, str]:
     env_path = ROOT / ".env.local"
     if not env_path.exists():
         env_path.write_text(ENV_TEMPLATE, encoding="utf-8")
-        warn(f"Created {env_path.name} with empty values.")
-        print()
-        print(c("33", "    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"))
-        print(c("33", "    Fill it in, then re-run this script."))
-        print(c("33", "    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"))
-        sys.exit(0)
+        ok(f"Created {env_path.name} with hackathon keys pre-filled")
+        print(c("33", "    Add the 6 Firebase keys to enable Cricket Tinder, then re-run."))
+        # Don't exit — the dev server can still run for Why/Roast/Live
+    else:
+        # Auto-patch any missing hackathon keys into an existing .env.local
+        found = parse_env_file(env_path)
+        patches = [(k, v) for k, v in HACKATHON_KEYS.items() if not found.get(k)]
+        if patches:
+            with env_path.open("a", encoding="utf-8") as f:
+                f.write("\n# auto-added by setup_and_run.py\n")
+                for k, v in patches:
+                    f.write(f"{k}={v}\n")
+            ok(f"Patched missing hackathon keys into .env.local: {', '.join(k for k, _ in patches)}")
 
     found = parse_env_file(env_path)
     missing_core = [k for k in CORE_REQUIRED if not found.get(k)]
     missing_tinder = [k for k in TINDER_REQUIRED if not found.get(k)]
 
     if missing_core:
-        fail(f"Required vars missing: {', '.join(missing_core)}")
+        fail(f"Required vars still missing: {', '.join(missing_core)}")
         print(f"    Edit {env_path} and re-run.")
         sys.exit(1)
 
