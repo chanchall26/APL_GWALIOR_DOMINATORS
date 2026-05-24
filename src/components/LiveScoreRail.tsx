@@ -68,11 +68,7 @@ export function LiveScoreRail({ excludeIds = [] }: Props) {
     <div className="space-y-2">
       {live.length > 0 && (
         <>
-          <SectionLabel
-            text="Live worldwide"
-            badge={`${live.length}`}
-            pulse
-          />
+          <SectionLabel text="Live" badge={`${live.length}`} pulse />
           <div className="space-y-2">
             {live.map((m) => (
               <MatchRow key={m.id} match={m} live />
@@ -123,46 +119,137 @@ function SectionLabel({
 }
 
 function MatchRow({ match, live }: { match: LiveMatch; live?: boolean }) {
+  const matchType = (match.matchType || "").toUpperCase() || "MATCH";
+  const t1rr = runRate(match.team1.score);
+  const t2rr = runRate(match.team2.score);
+  const elapsed = relativeTime(match.dateTimeGMT);
+
   return (
-    <div className="rounded-lg bg-card px-3 py-2 ring-1 ring-white/10">
-      <div className="flex items-center justify-between gap-2">
-        <span className="truncate text-[10px] uppercase tracking-wider text-muted-foreground">
+    <div className="overflow-hidden rounded-xl bg-card ring-1 ring-white/10">
+      {/* Header: series + match type */}
+      <div className="flex items-center justify-between gap-2 border-b border-white/5 bg-black/30 px-3 py-1.5">
+        <span className="truncate text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
           {match.series}
         </span>
+        <span className="shrink-0 rounded-full bg-white/10 px-1.5 py-px text-[9px] font-bold uppercase tracking-wider text-foreground/80">
+          {matchType}
+        </span>
+      </div>
+
+      {/* Scoreboard */}
+      <div className="space-y-1.5 px-3 py-2.5">
+        <TeamRow team={match.team1} rr={t1rr} />
+        <TeamRow team={match.team2} rr={t2rr} />
+      </div>
+
+      {/* Footer: live + status + elapsed */}
+      <div className="flex items-center gap-2 border-t border-white/5 bg-black/20 px-3 py-1.5">
         {live && (
-          <span className="text-[10px] font-bold uppercase tracking-wider text-red-400">
-            LIVE
+          <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-red-500/15 px-1.5 py-px text-[9px] font-bold uppercase tracking-wider text-red-400">
+            <span className="size-1 animate-pulse rounded-full bg-red-500" />
+            Live
           </span>
         )}
-      </div>
-      <div className="mt-1 grid grid-cols-2 gap-2 text-sm">
-        <TeamLine team={match.team1} />
-        <TeamLine team={match.team2} align="right" />
-      </div>
-      <div className="mt-1.5 truncate text-xs text-muted-foreground">
-        {match.status}
+        <span className="min-w-0 flex-1 truncate text-xs text-muted-foreground">
+          {match.status}
+        </span>
+        {elapsed && (
+          <span className="shrink-0 text-[10px] text-muted-foreground/70">
+            {elapsed}
+          </span>
+        )}
       </div>
     </div>
   );
 }
 
-function TeamLine({
+function TeamRow({
   team,
-  align,
+  rr,
 }: {
   team: LiveMatch["team1"];
-  align?: "right";
+  rr: string | null;
 }) {
   return (
-    <div
-      className={`flex min-w-0 items-center gap-1.5 ${
-        align === "right" ? "justify-end" : ""
-      }`}
-    >
-      <span className="rounded bg-white/10 px-1.5 py-0.5 text-[10px] font-bold">
-        {team.short}
-      </span>
-      <span className="truncate font-mono text-xs">{team.score || "—"}</span>
+    <div className="flex items-center gap-2">
+      <TeamLogo team={team} />
+      <div className="min-w-0 flex-1">
+        <div className="truncate text-sm font-bold leading-tight">{team.short}</div>
+        <div className="truncate text-[10px] leading-tight text-muted-foreground">
+          {team.name}
+        </div>
+      </div>
+      <div className="text-right">
+        <div className="font-mono text-sm font-semibold text-foreground/95">
+          {team.score || "—"}
+        </div>
+        {rr && (
+          <div className="font-mono text-[10px] text-muted-foreground">
+            RR {rr}
+          </div>
+        )}
+      </div>
     </div>
   );
+}
+
+function TeamLogo({ team }: { team: LiveMatch["team1"] }) {
+  if (team.img) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={team.img}
+        alt=""
+        className="size-7 shrink-0 rounded bg-white/10 object-contain p-0.5"
+        loading="lazy"
+        onError={(e) => {
+          (e.currentTarget as HTMLImageElement).style.display = "none";
+        }}
+      />
+    );
+  }
+  return (
+    <span className="flex size-7 shrink-0 items-center justify-center rounded bg-white/10 text-[10px] font-bold">
+      {team.short.charAt(0)}
+    </span>
+  );
+}
+
+function parseScore(s: string): { runs: number; wkts: number; overs: number } | null {
+  // Matches "36/1 (6)", "165/6 (16.5)", "287/3"
+  const m = s.match(/^(\d+)\/(\d+)(?:\s*\(([\d.]+)\))?/);
+  if (!m) return null;
+  return {
+    runs: parseInt(m[1], 10),
+    wkts: parseInt(m[2], 10),
+    overs: m[3] ? parseFloat(m[3]) : 0,
+  };
+}
+
+function runRate(s: string): string | null {
+  const p = parseScore(s);
+  if (!p || p.overs <= 0) return null;
+  // Convert "6.5" overs notation (6 overs + 5 balls) into decimal overs
+  const wholeOvers = Math.floor(p.overs);
+  const balls = Math.round((p.overs - wholeOvers) * 10);
+  const decimalOvers = wholeOvers + balls / 6;
+  if (decimalOvers <= 0) return null;
+  return (p.runs / decimalOvers).toFixed(2);
+}
+
+function relativeTime(dateTimeGMT: string): string {
+  if (!dateTimeGMT) return "";
+  try {
+    const start = new Date(dateTimeGMT).getTime();
+    if (Number.isNaN(start)) return "";
+    const now = Date.now();
+    const diffMin = Math.round((now - start) / 60000);
+    if (diffMin < -60) return `in ${Math.round(-diffMin / 60)}h`;
+    if (diffMin < 0) return `in ${-diffMin}m`;
+    if (diffMin < 60) return `${diffMin}m ago`;
+    const h = Math.floor(diffMin / 60);
+    return `${h}h ago`;
+  } catch {
+    return "";
+  }
 }
