@@ -16,20 +16,53 @@ type Profile = {
   gender: Gender;
   pref: Pref;
   favTeam: string;
-  favPlayerId: string;
-  favPlayerName: string;
+  favPlayerIds: string[]; // exactly 11
+  favPlayerNames: string[]; // same length, parallel array
   tonightTeam: Tonight;
   createdAt: number;
 };
 
 type Stage = "form" | "submitting" | "match" | "empty" | "error";
 
-type Team = { id: string; name: string; shortName: string; colors: { primary: string; secondary: string; text: string } };
-type Player = { id: string; name: string; team: string; nickname?: string };
+type Team = {
+  id: string;
+  name: string;
+  shortName: string;
+  colors: { primary: string; secondary: string; text: string };
+};
+type Player = { id: string; name: string; team: string; nickname?: string; role?: string };
 
 const LS_KEY = "criccoach.tinder.profile";
+const MAX_PICKS = 11;
+
+const FIREBASE_NOT_READY_MSG =
+  "Firebase isn't set up yet. Add the NEXT_PUBLIC_FIREBASE_* env vars to .env.local (or Vercel) and reload.";
 
 const sanitizeIg = (raw: string) => raw.replace(/[^a-zA-Z0-9._]/g, "").toLowerCase();
+
+// Older profiles stored a single favPlayerId. Normalize on read so legacy docs don't crash.
+function normalizeProfile(raw: Record<string, unknown>): Profile {
+  const r = raw as Partial<Profile> & { favPlayerId?: string; favPlayerName?: string };
+  return {
+    name: String(r.name ?? ""),
+    ig: String(r.ig ?? ""),
+    gender: (r.gender ?? "other") as Gender,
+    pref: (r.pref ?? "both") as Pref,
+    favTeam: String(r.favTeam ?? ""),
+    favPlayerIds: Array.isArray(r.favPlayerIds)
+      ? r.favPlayerIds
+      : r.favPlayerId
+        ? [r.favPlayerId]
+        : [],
+    favPlayerNames: Array.isArray(r.favPlayerNames)
+      ? r.favPlayerNames
+      : r.favPlayerName
+        ? [r.favPlayerName]
+        : [],
+    tonightTeam: (r.tonightTeam ?? "KKR") as Tonight,
+    createdAt: typeof r.createdAt === "number" ? r.createdAt : 0,
+  };
+}
 
 export default function TinderPage() {
   const [hydrated, setHydrated] = useState(false);
@@ -37,30 +70,32 @@ export default function TinderPage() {
   const [errorMsg, setErrorMsg] = useState("");
   const [me, setMe] = useState<Profile | null>(null);
   const [match, setMatch] = useState<Profile | null>(null);
+  const [sharedPlayers, setSharedPlayers] = useState<string[]>([]);
 
-  // form state
+  // Form state
   const [name, setName] = useState("");
   const [ig, setIg] = useState("");
   const [gender, setGender] = useState<Gender | null>(null);
   const [pref, setPref] = useState<Pref | null>(null);
   const [favTeam, setFavTeam] = useState<string>("");
-  const [favPlayerId, setFavPlayerId] = useState<string>("");
+  const [picks, setPicks] = useState<string[]>([]);
+  const [playerSearch, setPlayerSearch] = useState("");
   const [tonightTeam, setTonightTeam] = useState<Tonight | null>(null);
+
+  const teamMap = useMemo(() => {
+    const map = new Map<string, Team>();
+    (iplData.teams as Team[]).forEach((t) => map.set(t.id, t));
+    return map;
+  }, []);
 
   useEffect(() => {
     setHydrated(true);
-    if (!isFirebaseConfigured) {
-      setStage("error");
-      setErrorMsg(
-        "Firebase isn't configured. Set NEXT_PUBLIC_FIREBASE_* env vars on Vercel (or .env.local) and redeploy."
-      );
-      return;
-    }
-    const raw = typeof window !== "undefined" ? window.localStorage.getItem(LS_KEY) : null;
+    const raw =
+      typeof window !== "undefined" ? window.localStorage.getItem(LS_KEY) : null;
     if (raw) {
       try {
-        const parsed = JSON.parse(raw) as Profile;
-        if (parsed?.ig) {
+        const parsed = normalizeProfile(JSON.parse(raw));
+        if (parsed.ig) {
           setMe(parsed);
           void findMatch(parsed);
         }
@@ -72,10 +107,16 @@ export default function TinderPage() {
   }, []);
 
   const filteredPlayers = useMemo<Player[]>(() => {
+    const q = playerSearch.trim().toLowerCase();
     const all = iplData.players as Player[];
-    if (!favTeam) return all;
-    return all.filter((p) => p.team === favTeam);
-  }, [favTeam]);
+    if (!q) return all;
+    return all.filter(
+      (p) =>
+        p.name.toLowerCase().includes(q) ||
+        p.team.toLowerCase().includes(q) ||
+        (p.nickname?.toLowerCase().includes(q) ?? false)
+    );
+  }, [playerSearch]);
 
   const canSubmit =
     name.trim().length >= 2 &&
@@ -83,28 +124,57 @@ export default function TinderPage() {
     gender !== null &&
     pref !== null &&
     favTeam !== "" &&
-    favPlayerId !== "" &&
+    picks.length === MAX_PICKS &&
     tonightTeam !== null;
 
+  function togglePlayer(id: string) {
+    setPicks((prev) => {
+      if (prev.includes(id)) return prev.filter((x) => x !== id);
+      if (prev.length >= MAX_PICKS) return prev;
+      return [...prev, id];
+    });
+  }
+
   async function findMatch(my: Profile) {
+    if (!isFirebaseConfigured) {
+      setStage("error");
+      setErrorMsg(FIREBASE_NOT_READY_MSG);
+      return;
+    }
     setStage("submitting");
     try {
       const snap = await getDocs(collection(db, "tinder-profiles"));
-      const all = snap.docs.map((d) => d.data() as Profile);
-      const candidates = all.filter((p) => {
-        if (!p?.ig) return false;
-        if (p.ig.toLowerCase() === my.ig.toLowerCase()) return false;
-        const iWantThem = my.pref === "both" || my.pref === p.gender;
-        const theyWantMe = p.pref === "both" || p.pref === my.gender;
-        if (!iWantThem || !theyWantMe) return false;
-        return p.favTeam === my.favTeam || p.tonightTeam === my.tonightTeam;
-      });
-      if (candidates.length > 0) {
-        candidates.sort((a, b) => (b.createdAt ?? 0) - (a.createdAt ?? 0));
-        setMatch(candidates[0]);
+      const all = snap.docs.map((d) => normalizeProfile(d.data() as Record<string, unknown>));
+      const mySet = new Set(my.favPlayerIds);
+
+      const scored = all
+        .filter((p) => {
+          if (!p.ig) return false;
+          if (p.ig.toLowerCase() === my.ig.toLowerCase()) return false;
+          const iWantThem = my.pref === "both" || my.pref === p.gender;
+          const theyWantMe = p.pref === "both" || p.pref === my.gender;
+          return iWantThem && theyWantMe;
+        })
+        .map((p) => {
+          const shared: string[] = [];
+          p.favPlayerIds.forEach((pid, idx) => {
+            if (mySet.has(pid)) shared.push(p.favPlayerNames[idx] ?? pid);
+          });
+          let score = shared.length * 10;
+          if (p.favTeam && p.favTeam === my.favTeam) score += 3;
+          if (p.tonightTeam === my.tonightTeam) score += 1;
+          return { profile: p, score, shared };
+        })
+        .filter((c) => c.score > 0)
+        .sort((a, b) => b.score - a.score || (b.profile.createdAt - a.profile.createdAt));
+
+      if (scored.length > 0) {
+        setMatch(scored[0].profile);
+        setSharedPlayers(scored[0].shared);
         setStage("match");
       } else {
         setMatch(null);
+        setSharedPlayers([]);
         setStage("empty");
       }
     } catch (e) {
@@ -115,10 +185,19 @@ export default function TinderPage() {
 
   async function submit() {
     if (!canSubmit) return;
+    if (!isFirebaseConfigured) {
+      setStage("error");
+      setErrorMsg(FIREBASE_NOT_READY_MSG);
+      return;
+    }
     setStage("submitting");
     setErrorMsg("");
     const cleanIg = sanitizeIg(ig);
-    const player = (iplData.players as Player[]).find((p) => p.id === favPlayerId);
+    const allPlayers = iplData.players as Player[];
+    const pickedPlayers = picks
+      .map((id) => allPlayers.find((p) => p.id === id))
+      .filter((p): p is Player => Boolean(p));
+
     try {
       // Dedupe (case-insensitive)
       const snap = await getDocs(collection(db, "tinder-profiles"));
@@ -129,18 +208,19 @@ export default function TinderPage() {
       if (taken) {
         setStage("error");
         setErrorMsg(
-          `@${cleanIg} is already taken. If that's you, tap "Reset profile" once you've found yourself, or pick another handle.`
+          `@${cleanIg} is already taken. Try a different handle (or "Reset profile" once you find yourself).`
         );
         return;
       }
+
       const profile: Profile = {
         name: name.trim(),
         ig: cleanIg,
         gender: gender!,
         pref: pref!,
         favTeam,
-        favPlayerId,
-        favPlayerName: player?.name ?? "",
+        favPlayerIds: picks,
+        favPlayerNames: pickedPlayers.map((p) => p.name),
         tonightTeam: tonightTeam!,
         createdAt: Date.now(),
       };
@@ -158,12 +238,14 @@ export default function TinderPage() {
     if (typeof window !== "undefined") window.localStorage.removeItem(LS_KEY);
     setMe(null);
     setMatch(null);
+    setSharedPlayers([]);
     setName("");
     setIg("");
     setGender(null);
     setPref(null);
     setFavTeam("");
-    setFavPlayerId("");
+    setPicks([]);
+    setPlayerSearch("");
     setTonightTeam(null);
     setErrorMsg("");
     setStage("form");
@@ -189,7 +271,7 @@ export default function TinderPage() {
             Cricket Tinder
           </h1>
           <p className="mt-1 text-sm text-pink-200/80">
-            Find your soulmate at APL Gwalior tonight 💞
+            Pick your 11 — find the fan with the most overlap 💞
           </p>
         </header>
 
@@ -205,13 +287,13 @@ export default function TinderPage() {
               pref={pref}
               setPref={setPref}
               favTeam={favTeam}
-              setFavTeam={(id) => {
-                setFavTeam(id);
-                setFavPlayerId("");
-              }}
-              favPlayerId={favPlayerId}
-              setFavPlayerId={setFavPlayerId}
+              setFavTeam={setFavTeam}
+              picks={picks}
+              togglePlayer={togglePlayer}
+              playerSearch={playerSearch}
+              setPlayerSearch={setPlayerSearch}
               filteredPlayers={filteredPlayers}
+              teamMap={teamMap}
               tonightTeam={tonightTeam}
               setTonightTeam={setTonightTeam}
               canSubmit={canSubmit}
@@ -227,7 +309,12 @@ export default function TinderPage() {
           )}
 
           {stage === "match" && match && (
-            <MatchView match={match} onReset={reset} />
+            <MatchView
+              match={match}
+              shared={sharedPlayers}
+              teamMap={teamMap}
+              onReset={reset}
+            />
           )}
 
           {stage === "empty" && me && <EmptyView me={me} onReset={reset} />}
@@ -271,9 +358,12 @@ type FormProps = {
   setPref: (p: Pref) => void;
   favTeam: string;
   setFavTeam: (id: string) => void;
-  favPlayerId: string;
-  setFavPlayerId: (id: string) => void;
+  picks: string[];
+  togglePlayer: (id: string) => void;
+  playerSearch: string;
+  setPlayerSearch: (s: string) => void;
   filteredPlayers: Player[];
+  teamMap: Map<string, Team>;
   tonightTeam: Tonight | null;
   setTonightTeam: (t: Tonight) => void;
   canSubmit: boolean;
@@ -317,24 +407,37 @@ function FormView(p: FormProps) {
         </div>
         {p.ig && (
           <div className="mt-1 text-xs text-pink-200/60">
-            Will save as <span className="font-mono text-pink-300">@{sanitizeIg(p.ig)}</span>
+            Will save as{" "}
+            <span className="font-mono text-pink-300">@{sanitizeIg(p.ig)}</span>
           </div>
         )}
       </Field>
 
       <Field label="You are">
         <div className="grid grid-cols-3 gap-2">
-          <Choice active={p.gender === "male"} onClick={() => p.setGender("male")}>👨 Male</Choice>
-          <Choice active={p.gender === "female"} onClick={() => p.setGender("female")}>👩 Female</Choice>
-          <Choice active={p.gender === "other"} onClick={() => p.setGender("other")}>✨ Other</Choice>
+          <Choice active={p.gender === "male"} onClick={() => p.setGender("male")}>
+            👨 Male
+          </Choice>
+          <Choice active={p.gender === "female"} onClick={() => p.setGender("female")}>
+            👩 Female
+          </Choice>
+          <Choice active={p.gender === "other"} onClick={() => p.setGender("other")}>
+            ✨ Other
+          </Choice>
         </div>
       </Field>
 
       <Field label="Looking to match with">
         <div className="grid grid-cols-3 gap-2">
-          <Choice active={p.pref === "male"} onClick={() => p.setPref("male")}>👨 Men</Choice>
-          <Choice active={p.pref === "female"} onClick={() => p.setPref("female")}>👩 Women</Choice>
-          <Choice active={p.pref === "both"} onClick={() => p.setPref("both")}>💞 Both</Choice>
+          <Choice active={p.pref === "male"} onClick={() => p.setPref("male")}>
+            👨 Men
+          </Choice>
+          <Choice active={p.pref === "female"} onClick={() => p.setPref("female")}>
+            👩 Women
+          </Choice>
+          <Choice active={p.pref === "both"} onClick={() => p.setPref("both")}>
+            💞 Both
+          </Choice>
         </div>
       </Field>
 
@@ -359,22 +462,86 @@ function FormView(p: FormProps) {
         </div>
       </Field>
 
-      <Field label="Favorite player">
-        <select
-          value={p.favPlayerId}
-          onChange={(e) => p.setFavPlayerId(e.target.value)}
-          disabled={!p.favTeam}
-          className="w-full appearance-none rounded-xl border border-pink-300/30 bg-black/50 px-4 py-3 text-base text-white outline-none transition-colors focus:border-pink-400 disabled:opacity-50"
-        >
-          <option value="">
-            {p.favTeam ? "Pick a player…" : "Pick a team first"}
-          </option>
-          {p.filteredPlayers.map((pl) => (
-            <option key={pl.id} value={pl.id} className="bg-black">
-              {pl.name}{pl.nickname ? ` — ${pl.nickname.split(",")[0]}` : ""}
-            </option>
-          ))}
-        </select>
+      <Field label={`Your top ${MAX_PICKS} cricketers (${p.picks.length}/${MAX_PICKS})`}>
+        <div className="overflow-hidden rounded-xl border border-pink-300/30 bg-black/40">
+          <input
+            type="text"
+            value={p.playerSearch}
+            onChange={(e) => p.setPlayerSearch(e.target.value)}
+            placeholder="🔎 Search across all 10 teams…"
+            className="w-full border-b border-white/10 bg-transparent px-3 py-2.5 text-sm text-white placeholder-pink-200/40 outline-none"
+          />
+          <div className="max-h-72 overflow-y-auto p-1">
+            {p.filteredPlayers.length === 0 ? (
+              <div className="px-3 py-6 text-center text-xs text-pink-200/50">
+                No players match &ldquo;{p.playerSearch}&rdquo;
+              </div>
+            ) : (
+              p.filteredPlayers.map((pl) => {
+                const isSelected = p.picks.includes(pl.id);
+                const limitHit = !isSelected && p.picks.length >= MAX_PICKS;
+                const team = p.teamMap.get(pl.team);
+                return (
+                  <button
+                    key={pl.id}
+                    type="button"
+                    onClick={() => p.togglePlayer(pl.id)}
+                    disabled={limitHit}
+                    className={[
+                      "flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-sm transition-all",
+                      isSelected
+                        ? "bg-gradient-to-r from-pink-500/30 to-purple-500/30 ring-1 ring-pink-400/60"
+                        : limitHit
+                          ? "cursor-not-allowed opacity-30"
+                          : "hover:bg-white/5 active:bg-white/10",
+                    ].join(" ")}
+                  >
+                    <span
+                      className="rounded px-1.5 py-0.5 text-[9px] font-bold"
+                      style={
+                        team
+                          ? { background: team.colors.primary, color: team.colors.text }
+                          : { background: "#444" }
+                      }
+                    >
+                      {pl.team}
+                    </span>
+                    <span className="flex-1 truncate">
+                      {pl.name}
+                      {pl.role && (
+                        <span className="ml-1.5 text-[10px] text-pink-200/50">
+                          · {pl.role}
+                        </span>
+                      )}
+                    </span>
+                    <span
+                      className={[
+                        "flex size-5 shrink-0 items-center justify-center rounded-full text-[10px]",
+                        isSelected
+                          ? "bg-pink-500 text-white"
+                          : "border border-white/20",
+                      ].join(" ")}
+                    >
+                      {isSelected ? "✓" : ""}
+                    </span>
+                  </button>
+                );
+              })
+            )}
+          </div>
+          <div
+            className={[
+              "border-t border-white/5 px-3 py-2 text-center text-[11px] font-semibold",
+              p.picks.length === MAX_PICKS
+                ? "text-pink-300"
+                : "text-pink-200/60",
+            ].join(" ")}
+          >
+            {p.picks.length === MAX_PICKS
+              ? "✨ Squad locked in"
+              : `Pick ${MAX_PICKS - p.picks.length} more`}
+          </div>
+        </div>
       </Field>
 
       <Field label="Tonight you're rooting for">
@@ -476,8 +643,27 @@ function TonightChoice({
 
 /* ---------------- Match ---------------- */
 
-function MatchView({ match, onReset }: { match: Profile; onReset: () => void }) {
-  const team = (iplData.teams as Team[]).find((t) => t.id === match.favTeam);
+function MatchView({
+  match,
+  shared,
+  teamMap,
+  onReset,
+}: {
+  match: Profile;
+  shared: string[];
+  teamMap: Map<string, Team>;
+  onReset: () => void;
+}) {
+  const team = teamMap.get(match.favTeam);
+  const chemistry =
+    shared.length >= 7
+      ? { label: "Made for each other 💞", color: "text-pink-200" }
+      : shared.length >= 4
+        ? { label: "Soulmates 💗", color: "text-pink-300" }
+        : shared.length >= 1
+          ? { label: "Sparks flying 💕", color: "text-pink-400" }
+          : { label: "Worth a chat 💌", color: "text-pink-400" };
+
   const onShare = () => {
     const text = `I matched with @${match.ig} at APL Gwalior 💘🏏`;
     if (typeof window !== "undefined") {
@@ -491,8 +677,9 @@ function MatchView({ match, onReset }: { match: Profile; onReset: () => void }) 
 
   return (
     <div className="space-y-4">
-      <div className="text-center text-sm font-semibold text-pink-200">
-        It&apos;s a match! 💘
+      <div className="text-center">
+        <div className="text-sm font-semibold text-pink-200">It&apos;s a match! 💘</div>
+        <div className={`mt-0.5 text-xs ${chemistry.color}`}>{chemistry.label}</div>
       </div>
 
       <div
@@ -518,7 +705,26 @@ function MatchView({ match, onReset }: { match: Profile; onReset: () => void }) 
             </a>
           </div>
 
-          <div className="mt-5 space-y-2">
+          {/* Shared players hero */}
+          {shared.length > 0 && (
+            <div className="mt-5 rounded-xl bg-gradient-to-br from-pink-500/20 to-purple-500/20 p-3 ring-1 ring-pink-300/30">
+              <div className="text-[10px] font-bold uppercase tracking-wider text-pink-200/80">
+                💞 {shared.length} player{shared.length > 1 ? "s" : ""} in common
+              </div>
+              <div className="mt-1.5 flex flex-wrap gap-1.5">
+                {shared.map((nm) => (
+                  <span
+                    key={nm}
+                    className="rounded-full bg-white/10 px-2 py-0.5 text-xs text-white ring-1 ring-pink-300/30"
+                  >
+                    {nm}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div className="mt-3 space-y-2">
             <Row label="Loves">
               {team ? (
                 <span
@@ -530,9 +736,6 @@ function MatchView({ match, onReset }: { match: Profile; onReset: () => void }) 
               ) : (
                 <span className="text-white">{match.favTeam}</span>
               )}
-            </Row>
-            <Row label="Player crush">
-              <span className="text-white">{match.favPlayerName || "—"}</span>
             </Row>
             <Row label="Rooting tonight">
               <span className="font-bold text-white">{match.tonightTeam}</span>
@@ -579,7 +782,8 @@ function EmptyView({ me, onReset }: { me: Profile; onReset: () => void }) {
         You&apos;re the first one here!
       </h2>
       <p className="mt-2 text-sm text-pink-200/80">
-        Hang tight, <span className="font-mono text-pink-300">@{me.ig}</span>. Share this URL with someone you like — they&apos;ll show up the moment they sign up.
+        Hang tight, <span className="font-mono text-pink-300">@{me.ig}</span>. Share
+        this URL with someone you like — they&apos;ll show up the moment they sign up.
       </p>
       <button
         onClick={onReset}
