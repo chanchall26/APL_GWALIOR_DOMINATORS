@@ -232,6 +232,27 @@ export default function HomeDashboard() {
             </div>
           </div>
         </Link>
+
+        <Link
+          href="/tinder"
+          className="group relative block overflow-hidden rounded-2xl bg-gradient-to-br from-pink-500/25 via-rose-500/15 to-purple-600/25 p-5 ring-1 ring-pink-300/30 transition-all hover:scale-[1.02] hover:ring-pink-300/70 hover:shadow-xl hover:shadow-pink-500/20 active:scale-[0.99]"
+        >
+          <span aria-hidden className="pointer-events-none absolute -right-2 -top-2 text-3xl opacity-20 transition-transform group-hover:scale-125">
+            💞
+          </span>
+          <div className="relative flex items-start gap-4">
+            <div className="text-4xl">💘</div>
+            <div className="flex-1">
+              <h2 className="font-heading text-xl font-bold">Cricket Tinder</h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Find your match in this room — IPL fans only 💞🏏
+              </p>
+            </div>
+            <div className="text-pink-300 transition-transform group-hover:translate-x-1">
+              →
+            </div>
+          </div>
+        </Link>
       </section>
 
       <footer className="mt-6 text-center text-xs text-muted-foreground">
